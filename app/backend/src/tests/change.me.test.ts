@@ -12,7 +12,7 @@ const { expect } = chai;
 describe('Rota de login', () => {
   let chaiHttpResponse: Response;
 
-  describe('Verifica se o usuário existe', () => {
+  describe('Verifica se é possível fazer login', () => {
 
     before(async () => {
       chaiHttpResponse = await chai

@@ -1,6 +1,7 @@
 export default interface LoginDTO {
-  // username: string,
   role?: string,
+  token?: string,
+  status?: number,
   email: string,
   password: string,
 }

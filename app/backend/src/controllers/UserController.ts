@@ -4,26 +4,25 @@ import UsersService from '../services/user/UserService';
 class UserController {
   constructor(private service = new UsersService()) { }
 
-  private errors = (error: string) => {
-    switch (error) {
-      case 'All fields must be filled':
-        return 400;
-      case 'Incorrect email or password':
-        return 401;
+  private httpErrors = (httpError: number) => {
+    switch (httpError) {
+      case 400:
+        return 'All fields must be filled';
+      case 401:
+        return 'Incorrect email or password';
+      case 200:
       default:
-        return 500;
     }
   };
 
   public login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const result = await this.service.login(email, password);
-    if (result.includes('Error')) {
-      const message = result.split(':')[1].trim();
-      const statusError = this.errors(message);
-      return res.status(statusError).json({ message });
+    if (result.status !== 200) {
+      const message = this.httpErrors(result.status);
+      return res.status(result.status).json({ message });
     }
-    res.status(200).json({ token: result });
+    res.status(result.status).json({ token: result.token });
   };
 
   public validateLogin = async (req: Request, res: Response) => {
