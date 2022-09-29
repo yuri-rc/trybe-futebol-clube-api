@@ -1,6 +1,6 @@
 import { compare } from 'bcryptjs';
-import UserModel from '../../models/UserModel';
-import jwt from '../../helpers/jwt';
+import UserModel from '../models/UserModel';
+import jwt from '../helpers/jwt';
 
 type Response = {
   status: number,
