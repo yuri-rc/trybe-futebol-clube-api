@@ -25,9 +25,6 @@ export default class TeamService {
 
   public async findByPk(id: string): Promise<ResponseFindByPk> {
     const team = await this.model.findByPk(id);
-    if (team) {
-      return { status: 200, team };
-    }
-    return { status: 404 };
+    return { status: 200, team };
   }
 }

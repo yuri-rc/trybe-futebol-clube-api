@@ -9,8 +9,8 @@ export default class TeamModel {
     return result;
   }
 
-  public async findByPk(id: string): Promise<TeamDTO | null> {
+  public async findByPk(id: string): Promise<TeamDTO> {
     const result = await this.model.findByPk(id);
-    return result;
+    return result as TeamDTO;
   }
 }
