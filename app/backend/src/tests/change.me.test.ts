@@ -9,6 +9,8 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
+let token = '';
+
 describe('Rota de login', () => {
   let chaiHttpResponse: Response;
 
@@ -29,6 +31,7 @@ describe('Rota de login', () => {
     });
 
     it('retorna um token', async () => {
+      token = chaiHttpResponse.body.token;
       expect(chaiHttpResponse.body).to.have.property('token');
     });
   })
@@ -99,7 +102,7 @@ describe('Rota de login', () => {
         .request(app)
         .post('/login')
         .send({
-          email: 'invalid@user.com',
+          email: 'user@user.com',
           password: 'invalidpassword',
         });
     });
@@ -110,6 +113,23 @@ describe('Rota de login', () => {
 
     it('retorna o erro Incorrect email or password', async () => {
       expect(chaiHttpResponse.body.message).to.equals('Incorrect email or password');
+    });
+  })
+  describe('Verifica rota /login/validate', () => {
+
+    before(async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/login/validate')
+        .set('authorization', token);
+    });
+
+    it('retorna status code 200', async () => {
+      expect(chaiHttpResponse).to.have.status(200);
+    });
+
+    it('retorna um objeto role', async () => {
+      expect(chaiHttpResponse.body).to.have.property('role');
     });
   })
 });
