@@ -1,13 +1,7 @@
 import { Router } from 'express';
-import UserController from '../controllers/UserController';
+import login from './login';
 
 const router = Router();
 
-const userController = new UserController();
-
-router.route('/login')
-  .post(userController.login);
-router.route('/login/validate')
-  .get(userController.validateLogin);
-
+router.use('/login', login);
 export default router;
