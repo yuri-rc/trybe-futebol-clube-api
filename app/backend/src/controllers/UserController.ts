@@ -17,19 +17,19 @@ class UserController {
 
   public login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
-    const result = await this.service.login(email, password);
-    if (result.status !== 200) {
-      const message = this.httpErrors(result.status);
-      return res.status(result.status).json({ message });
+    const { status, token } = await this.service.login(email, password);
+    if (!token) {
+      const message = this.httpErrors(status);
+      return res.status(status).json({ message });
     }
-    res.status(result.status).json({ token: result.token });
+    res.status(status).json({ token });
   };
 
   public validateLogin = async (req: Request, res: Response) => {
     const token = req.headers.authorization;
     if (typeof token === 'string') {
-      const role = await this.service.validateLogin(token);
-      res.status(200).json({ role });
+      const { status, role } = await this.service.validateLogin(token);
+      res.status(status).json({ role });
     }
   };
 }
