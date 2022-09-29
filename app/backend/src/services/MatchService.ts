@@ -13,8 +13,12 @@ export default class MatchService {
     this.model = new MatchModel();
   }
 
-  public async findAll(): Promise<ResponseFindAll> {
-    const matches = await this.model.findAll();
-    return { status: 200, matches };
+  public async findAll(inProgress?: string): Promise<ResponseFindAll> {
+    if (inProgress === undefined) {
+      const matches = await this.model.findAll();
+      return { status: 200, matches };
+    }
+    const filteredMatches = await this.model.findAllInProgress(inProgress as string);
+    return { status: 200, matches: filteredMatches };
   }
 }

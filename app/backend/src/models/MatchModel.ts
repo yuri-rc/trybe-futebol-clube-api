@@ -15,6 +15,19 @@ export default class MatchModel {
     return result;
   }
 
+  public async findAllInProgress(inProgress: string): Promise<MatchDTO[]> {
+    console.log(inProgress);
+
+    const result = await this.model.findAll({
+      include: [
+        { model: Team, as: 'teamHome', attributes: { exclude: ['id'] } },
+        { model: Team, as: 'teamAway', attributes: { exclude: ['id'] } },
+      ],
+      where: { inProgress: inProgress === 'true' },
+    });
+    return result;
+  }
+
   // public async findByPk(id: string): Promise<TeamDTO | null> {
   //   const result = await this.model.findByPk(id);
   //   return result;

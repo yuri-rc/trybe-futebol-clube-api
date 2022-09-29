@@ -16,7 +16,8 @@ class TeamController {
   // };
 
   public findAll = async (req: Request, res: Response) => {
-    const { status, matches } = await this.service.findAll();
+    const { inProgress } = req.query;
+    const { status, matches } = await this.service.findAll(inProgress as string);
     res.status(status).json([...matches]);
   };
 }
