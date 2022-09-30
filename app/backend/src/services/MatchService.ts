@@ -31,4 +31,9 @@ export default class MatchService {
     const match = await this.model.create(_match);
     return { status: 201, match };
   }
+
+  public async update(id: string) {
+    await this.model.update(id);
+    return { status: 200 };
+  }
 }
