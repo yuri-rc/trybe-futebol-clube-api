@@ -8,7 +8,8 @@ type ResponseFindAll = {
 
 type ResponseCreate = {
   status: number,
-  match: MatchDTO
+  match?: MatchDTO,
+  message?: string
 };
 
 export default class MatchService {
@@ -28,6 +29,9 @@ export default class MatchService {
   }
 
   public async create(_match: MatchDTO): Promise<ResponseCreate> {
+    if (_match.homeTeam === _match.awayTeam) {
+      return { status: 401, message: 'It is not possible to create a match with two equal teams' };
+    }
     const match = await this.model.create(_match);
     return { status: 201, match };
   }
