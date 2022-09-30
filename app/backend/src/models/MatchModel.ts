@@ -31,9 +31,20 @@ export default class MatchModel {
     return result;
   }
 
-  public async update(id: string): Promise<void> {
+  public async updateInProgress(id: string): Promise<void> {
     await this.model.update(
       { inProgress: 0 },
+      { where: { id } },
+    );
+  }
+
+  public async updateTeamGoals(
+    id: string,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<void> {
+    await this.model.update(
+      { homeTeamGoals, awayTeamGoals },
       { where: { id } },
     );
   }

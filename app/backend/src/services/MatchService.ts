@@ -36,8 +36,17 @@ export default class MatchService {
     return { status: 201, match };
   }
 
-  public async update(id: string) {
-    await this.model.update(id);
+  public async updateInProgress(id: string) {
+    await this.model.updateInProgress(id);
+    return { status: 200 };
+  }
+
+  public async updateTeamGoals(
+    id: string,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ) {
+    await this.model.updateTeamGoals(id, homeTeamGoals, awayTeamGoals);
     return { status: 200 };
   }
 }

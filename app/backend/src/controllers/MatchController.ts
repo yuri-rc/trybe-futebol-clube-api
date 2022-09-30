@@ -30,10 +30,17 @@ class TeamController {
     }
   };
 
-  public update = async (req: Request, res: Response) => {
+  public updateInProgress = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { status } = await this.service.update(id);
+    const { status } = await this.service.updateInProgress(id);
     res.status(status).json({ message: 'Finished' });
+  };
+
+  public updateTeamGoals = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    const { status } = await this.service.updateTeamGoals(id, homeTeamGoals, awayTeamGoals);
+    res.status(status).json({ message: 'Updated' });
   };
 }
 
