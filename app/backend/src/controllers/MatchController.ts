@@ -15,11 +15,18 @@ class TeamController {
     const token = req.headers.authorization;
     try {
       jwt.validate(token as string);
-      const _match = req.body;
-      const { status, match, message } = await this.service.create({ ..._match, inProgress: true });
-      return res.status(status).json(match || { message });
     } catch {
       return res.status(401).json({ message: 'Token must be a valid token' });
+    }
+    try {
+      const _match = req.body;
+      const { status, match, message } = await this.service.create(
+        { ..._match, inProgress: true },
+      );
+      return res.status(status).json(match || { message });
+    } catch {
+      const message = 'There is no team with such id!';
+      return res.status(404).json({ message });
     }
   };
 
