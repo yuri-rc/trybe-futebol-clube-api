@@ -6,6 +6,11 @@ type ResponseFindAll = {
   matches: MatchDTO[]
 };
 
+type ResponseCreate = {
+  status: number,
+  match: MatchDTO
+};
+
 export default class MatchService {
   public model: MatchModel;
 
@@ -20,5 +25,10 @@ export default class MatchService {
     }
     const filteredMatches = await this.model.findAllInProgress(inProgress as string);
     return { status: 200, matches: filteredMatches };
+  }
+
+  public async create(_match: MatchDTO): Promise<ResponseCreate> {
+    const match = await this.model.create(_match);
+    return { status: 201, match };
   }
 }

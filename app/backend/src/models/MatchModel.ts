@@ -28,6 +28,11 @@ export default class MatchModel {
     return result;
   }
 
+  public async create(match: MatchDTO): Promise<MatchDTO> {
+    const result = await this.model.create(match);
+    return result;
+  }
+
   // public async findByPk(id: string): Promise<TeamDTO | null> {
   //   const result = await this.model.findByPk(id);
   //   return result;

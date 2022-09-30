@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import MatchService from '../services/MatchService';
+import jwt from '../helpers/jwt';
 
 class TeamController {
   constructor(private service = new MatchService()) { }
@@ -19,6 +20,18 @@ class TeamController {
     const { inProgress } = req.query;
     const { status, matches } = await this.service.findAll(inProgress as string);
     res.status(status).json([...matches]);
+  };
+
+  public create = async (req: Request, res: Response) => {
+    const token = req.headers.authorization;
+    try {
+      jwt.validate(token as string);
+      const _match = req.body;
+      const { status, match } = await this.service.create({ ..._match, inProgress: true });
+      return res.status(status).json(match);
+    } catch {
+      return res.status(401).json({ message: 'Token must be a valid token' });
+    }
   };
 }
 
