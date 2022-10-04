@@ -9,6 +9,13 @@ export default class Match extends Model {
   awayTeam!: number;
   awayTeamGoals!: number;
   inProgress!: number;
+  teamHome!: {
+    teamName: string
+  };
+
+  teamAway!: {
+    teamName: string
+  };
 }
 Match.init({
   id: {

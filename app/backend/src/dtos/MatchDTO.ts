@@ -5,10 +5,10 @@ export default interface MatchDTO {
   awayTeam: number,
   awayTeamGoals: number,
   inProgress: number,
-  // teamHome: {
-  //   teamName: string,
-  // },
-  // teamAway: {
-  //   teamName: string,
-  // },
+  teamHome: {
+    teamName: string,
+  },
+  teamAway: {
+    teamName: string,
+  },
 }
